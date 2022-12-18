@@ -1,7 +1,6 @@
 <?php
 require_once '../csrf.php';
 $csrf=new csrf();
-$csrf->token();
 echo '<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,4 +19,3 @@ echo '<form action="test_1.php" method="post">
     </form>
 </body>
 </html>';
-//echo $_SERVER['HTTP_ORIGIN'];
