@@ -13,10 +13,8 @@ function createHiddenInputElement() {
     inputElement.value = user_csrf_token;
     return inputElement;
 }
-for (let elem of document.querySelectorAll('form')) {
-    if (elem.matches('form')) {
-      elem.append(createHiddenInputElement());
-    }
+for (let elem of document.querySelectorAll('form')) {    
+      elem.append(createHiddenInputElement());    
   }
 
 
