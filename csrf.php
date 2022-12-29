@@ -7,7 +7,7 @@ class csrf{
 //   refreshToken() для новой страницы, если не проходит, то failedValidationToken()
 
     private static $use_script=true;//использоваться ли js скрипт(если false, то необходимо вставлять insertHiddenToken() )
-    private static $url_script='http://clerk/class/js/loadcsrf.js';//впишите сюда абсолютный путь к скрипту
+    private static $url_script='/js/loadcsrf.js';//впишите сюда абсолютный путь к скрипту
     private static $lenght_token=20;
     private static $page = array();
     private static $token_name='csrf';
@@ -60,6 +60,12 @@ class csrf{
     private function getToken() {        
         if(!isset($_POST)){            
             self::genToken();
+            return true;
+        }
+        elseif(isset($_GET)&&empty($_POST))
+        {
+            self::genToken();
+            return true;
         }
         elseif(isset($_POST[self::$token_name])){
             self::$user_token_csrf=filter_input(INPUT_POST,self::$token_name, FILTER_SANITIZE_URL);
@@ -75,7 +81,7 @@ class csrf{
     }     
     private function validationToken() {
         if(self::getToken()==true){
-            if((!empty($_GET))){//ничего не делаем если запрос поступил из GET
+            if((!empty($_GET))or(empty($_GET)&&empty($_POST))){//ничего не делаем если запрос поступил из GET
             }
             elseif(!isset($_SERVER['HTTP_REFERER'])){//если просто первая страница или обновление
                 self::refreshToken();               
